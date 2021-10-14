@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBarContainer } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Department } from '../department';
@@ -17,12 +18,28 @@ export class DepartmentComponent implements OnInit {
 
   private unsubscribe$: Subject<any> = new Subject();
 
-  constructor(private departmentService: DepartmentService) { }
+  constructor(
+    private departmentService: DepartmentService,
+    private snackbar: MatSnackBarContainer
+  ) { }
 
   ngOnInit() {
     this.departmentService.get()
       .pipe(takeUntil(this.unsubscribe$))
     .subscribe((deps)=>this.departments=deps)
+  }
+
+  clearFields() {
+    this.depName = '';
+    this.depEdit = null;
+  }
+
+  cancel() {
+    this.clearFields();
+  }
+
+  notify(msg: string) {
+    this.snackbar.open
   }
 
 }

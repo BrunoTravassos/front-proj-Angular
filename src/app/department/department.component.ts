@@ -29,6 +29,36 @@ export class DepartmentComponent implements OnInit {
     .subscribe((deps)=>this.departments=deps)
   }
 
+  save() {
+    if (this.depEdit) {
+      this.departmentService.update(
+        {name:this.depName, _id: this.depEdit._id}
+      ).subscribe(
+        (dep) => {
+          this.notify('UPDATED!')
+        },
+        (err)=> {
+          this.notify('ERROR');
+          console.error(err);
+        }
+      )
+    }
+    else {
+      this.departmentService.add({ name: this.depName })
+        .subscribe(
+          (dep) => {
+            console.log(dep);
+            this.notify('INSERTED!');
+          },
+          (err) => {
+            console.error(err);
+          }
+      )
+    }
+
+    this.clearFields();
+  }
+
   clearFields() {
     this.depName = '';
     this.depEdit = null;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBarContainer } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Department } from '../department';
@@ -20,7 +20,7 @@ export class DepartmentComponent implements OnInit {
 
   constructor(
     private departmentService: DepartmentService,
-    private snackbar: MatSnackBarContainer
+    private snackbar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -39,7 +39,7 @@ export class DepartmentComponent implements OnInit {
   }
 
   notify(msg: string) {
-    this.snackbar.open
+    this.snackbar.open(msg, 'OK', { duration: 3000 });
   }
 
 }

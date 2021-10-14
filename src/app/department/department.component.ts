@@ -23,12 +23,16 @@ export class DepartmentComponent implements OnInit {
     private snackbar: MatSnackBar
   ) { }
 
+
   ngOnInit() {
     this.departmentService.get()
       .pipe(takeUntil(this.unsubscribe$))
     .subscribe((deps)=>this.departments=deps)
   }
 
+/**salvando
+ *
+ */
   save() {
     if (this.depEdit) {
       this.departmentService.update(
@@ -59,17 +63,53 @@ export class DepartmentComponent implements OnInit {
     this.clearFields();
   }
 
+/**
+  * editar
+ * @param dep
+ */
+  edit(dep: Department) {
+    this.depName = dep.name;
+    this.depEdit = dep;
+  }
+
+/**
+ *deletar
+ * @param dep
+ */
+  delete(dep: Department) {
+    this.departmentService.del(dep)
+      .subscribe(
+        () => this.notify('REMOVED!'),
+        (err) => this.notify(err.error.msg)
+    )
+  }
+
+
+/**
+ * limparCampos
+ */
   clearFields() {
     this.depName = '';
     this.depEdit = null;
   }
 
+  /**
+   * cancelar
+   */
   cancel() {
     this.clearFields();
   }
 
+
+  /**
+   *Mensagem
+   * @param msg
+   */
   notify(msg: string) {
     this.snackbar.open(msg, 'OK', { duration: 3000 });
   }
 
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+  }
 }

@@ -7,12 +7,14 @@ import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DepartmentComponent } from './department/department.component';
+import { ProductComponent } from './product/product.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    DepartmentComponent
+    DepartmentComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
